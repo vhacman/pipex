@@ -77,12 +77,6 @@ pipex/
 └── README.md
 ```
 
-## 🚀 Bonus (se previsto)
-
-La versione bonus può includere:
-
-- Gestione di un numero illimitato di comandi
-- Supporto per `here_doc`, che simula l’input da terminale fino a una `LIMITER`
 
 Esempio:
 
