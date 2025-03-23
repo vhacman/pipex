@@ -6,7 +6,7 @@
 /*   By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 10:26:01 by gcollet           #+#    #+#             */
-/*   Updated: 2025/03/23 13:24:54 by vhacman          ###   ########.fr       */
+/*   Updated: 2025/03/23 18:17:23 by vhacman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ char	*get_cmd_path(char *cmd, char **envp)
 	i = 0;
 	if (ft_strchr(cmd, '/'))
 	{
-		if (access(cmd, X_OK) == 0)
-			return (ft_strdup(cmd));
-		return (NULL);
+		if (access(cmd, F_OK) != 0)
+			return (NULL);
+		return (ft_strdup(cmd));
 	}
 	dirs = get_path_dirs(envp);
 	if (!dirs)
@@ -101,6 +101,7 @@ char	**split_cmd_and_find(char *input, char **envp, char **cmd_path)
 		ft_putstr_fd("Pipex: command not found: ", 2);
 		ft_putstr_fd(input, 2);
 		ft_putstr_fd("\n", 2);
+		free_words(parts);
 		exit(127);
 	}
 	*cmd_path = get_cmd_path(parts[0], envp);

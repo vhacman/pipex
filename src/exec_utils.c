@@ -17,10 +17,9 @@
 ** The error message is prefixed with "Error: " in red.
 ** Used throughout the project to handle critical failures (open, fork, pipe...).
 */
-void	error(const char *msg)
+void	error(void)
 {
 	ft_putstr_fd("\033[31mError: ", 2);
-	perror(msg);
 	ft_putstr_fd("\033[0m", 2);
 	exit(EXIT_FAILURE);
 }
@@ -39,15 +38,23 @@ void	execute(char *av, char **envp)
 {
 	char	**command;
 	char	*path;
+	int		code;
 
 	command = split_cmd_and_find(av, envp, &path);
+	if (!command || !path)
+		exit(127);
 	if (execve(path, command, envp) == -1)
 	{
+		code = 127;
+		if (errno == EACCES)
+		{
+			ft_putstr_fd("Permission denied\n", 2);
+			code = 126;
+		}
+		else
+			perror("pipex");
 		free(path);
 		free_words(command);
-		if (errno == EACCES)
-			exit (126);
-		else
-			exit (127);
+		exit(code);
 	}
 }

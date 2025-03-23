@@ -6,7 +6,7 @@
 #    By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/23 12:57:35 by vhacman           #+#    #+#              #
-#    Updated: 2025/03/23 13:17:35 by vhacman          ###   ########.fr        #
+#    Updated: 2025/03/23 17:46:31 by vhacman          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,11 +40,11 @@ OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 # Compile everything
 all: $(NAME)
-	@$(MAKE) echo
 
 # Compile pipex with libft
 $(NAME): $(LIBFT_A) $(OBJS)
 	@$(CC) $(CFLAGS) -I$(INC_DIR) -o $@ $^ $(LIBFT_A)
+	@$(MAKE) echo
 
 # Compile individual .c to .o
 $(OBJ_DIR)/%.o: %.c
@@ -53,7 +53,7 @@ $(OBJ_DIR)/%.o: %.c
 
 # Build libft silently
 $(LIBFT_A):
-	@make -s -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR) $(notdir $@)
 
 # Clean .o files and libft objects silently
 clean:
@@ -85,7 +85,7 @@ valgrind:
 
 # Stylish ASCII message
 echo:
-	@echo "(ﾟ◥益◤ﾟ) P̣̱̣͉̃̋̅ͦ̀ȉ̯͙͍̹̙͊p͍̭̰̎̃e̪̞̦̬̬̐̐x͚͙͕̠̋͌́ͦ ͓͗̃̅͊ͯC̬̥͎o̮̥̓ṁ̠̤̩ͤpͯ̆̽î̦̬͉ͅl̹ͅe͛ͬd̮  (ʘ言ʘ╬)"
+	@echo "(ﾟ◥益◤ﾟ) P̣̱̣͉̃̋̅ͦ̀ȉ̯͙͍̹̙͊p͍̭̰̎̃e̪̞̦̬̬̐̐x͚͙͕̠̋͌́ͦ ͓͗̃̅͊ͯC̬̥͎o̮̥̓ṁ̠̤̩ͤpͯ̆̽î̦̬͉ͅl̹ͅe͛ͬd̮  (ʘ言ʘ)"
 
 # Targets that are not files
 .PHONY: all clean fclean re valgrind echo

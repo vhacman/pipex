@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/23 16:50:39 by vhacman           #+#    #+#             */
+/*   Updated: 2025/03/23 16:50:39 by vhacman          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_H
 # define PIPEX_H
 
@@ -10,7 +22,7 @@
 # include "../libft/includes/libft.h"
 
 // exec_utils.c
-void	error(const char *msg);
+void	error(void);
 void	execute(char *cmd_input, char **envp);
 
 // path_utils.c
