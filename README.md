@@ -77,7 +77,7 @@ pipex/
 └── README.md
 ```
 
-## 🧠 Cosa impari con questo progetto
+## 🧠 Cosa ho imparato con questo progetto
 
 - Come funzionano le pipe tra processi
 - Gestione della memoria e dei file descriptor
