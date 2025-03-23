@@ -77,13 +77,6 @@ pipex/
 └── README.md
 ```
 
-
-Esempio:
-
-```bash
-./pipex here_doc LIMITER cmd1 cmd2 outfile
-```
-
 ## 🧠 Cosa impari con questo progetto
 
 - Come funzionano le pipe tra processi
