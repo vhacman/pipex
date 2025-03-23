@@ -5,62 +5,87 @@
 #                                                     +:+ +:+         +:+      #
 #    By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/18 11:48:43 by vhacman           #+#    #+#              #
-#    Updated: 2025/03/18 12:49:18 by vhacman          ###   ########.fr        #
+#    Created: 2025/03/23 12:57:35 by vhacman           #+#    #+#              #
+#    Updated: 2025/03/23 13:17:35 by vhacman          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Nome dell'eseguibile finale
-NAME = pipex
+# **************************************************************************** #
+#                                VARIABLES                                     #
+# **************************************************************************** #
 
-# Il compilatore da utilizzare
-CC = gcc
+NAME		= pipex                                # Executable name
+CC			= gcc                                  # Compiler
+CFLAGS		= -Wall -Wextra -Werror -gdwarf-4      # Compilation flags with debug info
+RM			= rm -f                                # Remove command
+MAKEFLAGS	+= -s                                  # Silence recursive make output
 
-# Flag di compilazione: -Wall (tutti i warning), -Wextra (warning extra), 
-# -Werror (tratta i warning come errori)
-CFLAGS = -Wall -Wextra -Werror 
+# Directories
+SRC_DIR		= src
+OBJ_DIR		= obj
+INC_DIR		= includes
+LIBFT_DIR	= libft
+LIBFT_A		= $(LIBFT_DIR)/libft.a                # Compiled libft
 
-# File sorgenti del progetto
-SRC = pipex.c utils.c
+# Sources and objects
+SRCS		= $(SRC_DIR)/main.c \
+			  $(SRC_DIR)/pipex.c \
+			  $(SRC_DIR)/exec_utils.c \
+			  $(SRC_DIR)/path_utils.c
+OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
-# Converte i nomi dei file .c in nomi di file .o
-OBJ = $(SRC:.c=.o)
+# **************************************************************************** #
+#                                  RULES                                       #
+# **************************************************************************** #
 
-# Target di default: se digitiamo 'make' verrà eseguito 'all'
+# Compile everything
 all: $(NAME)
+	@$(MAKE) echo
 
+# Compile pipex with libft
+$(NAME): $(LIBFT_A) $(OBJS)
+	@$(CC) $(CFLAGS) -I$(INC_DIR) -o $@ $^ $(LIBFT_A)
 
-# Target per costruire l'eseguibile:
-# 1) Stampa un messaggio.
-# 2) Esegue il Makefile della cartella libft 
-#    (make -C libft) per compilare la libreria.
-# 3) Compila e linka il progetto principale con la libft, usando -I e -L 
-#    per includere e linkare.
-$(NAME): $(OBJ)
-	@echo "Compiling libft..."
-	@make -C libft
-	$(CC) $(CFLAGS) -Ilibft -o $(NAME) $(OBJ) -Llibft -lft
+# Compile individual .c to .o
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
+# Build libft silently
+$(LIBFT_A):
+	@make -s -C $(LIBFT_DIR)
 
-# Regola generica per compilare i .c in .o
-# $< è il nome del file sorgente, $@ è il nome del target (.o)
-%.o: %.c
-	$(CC) $(CFLAGS) -Ilibft -c $< -o $@
-
-
-
-# Pulisce i file oggetto .o del progetto principale
+# Clean .o files and libft objects silently
 clean:
-	rm -f $(OBJ)
-	@make clean -C libft 
-#@make clean -C libft -> il Makefile esegue il comando make clean all'interno 
-# della directory libft
+	@make -s -C $(LIBFT_DIR) fclean
+	@$(RM) -r $(OBJ_DIR)
+	@$(RM) valgrind.log $(NAME)
+	@echo "(╯°□°）╯︵ ┻━┻  Pipex obliterated. Objects, logs, binary, and libft.a wiped. ✨"
 
-
-# Pulisce gli oggetti e l'eseguibile finale, e fa lo stesso per la libft
+# Full clean: pipex + libft.a
 fclean: clean
-	rm -f $(NAME)
-	@make fclean -C libft
+	@make -s -C $(LIBFT_DIR) fclean
+	@$(RM) $(NAME)
+	@echo "(⌐■_■)🔥 Pipex & libft.a obliterated. fclean complete. 💣"
 
-# Ricostruisce il progetto da zero (equivale a fclean + all)
+# Rebuild everything
 re: fclean all
+	@echo "(☞ﾟヮﾟ)☞ Recompiled from scratch. Pipex rises again!"
+
+# **************************************************************************** #
+#                             EXTRA TARGETS                                    #
+# **************************************************************************** #
+
+# Run pipex with Valgrind
+valgrind:
+	@echo "🧠 Initializing neural scan..."
+	@echo "🔍 Launching pipex under memory surveillance..."
+	@valgrind --leak-check=full --track-fds=yes ./$(NAME) infile \"ls\" \"wc -l\" outfile > valgrind.log 2>&1
+	@echo "✅ Memory scan complete. No survivors... hopefully. ☠️"
+
+# Stylish ASCII message
+echo:
+	@echo "(ﾟ◥益◤ﾟ) P̣̱̣͉̃̋̅ͦ̀ȉ̯͙͍̹̙͊p͍̭̰̎̃e̪̞̦̬̬̐̐x͚͙͕̠̋͌́ͦ ͓͗̃̅͊ͯC̬̥͎o̮̥̓ṁ̠̤̩ͤpͯ̆̽î̦̬͉ͅl̹ͅe͛ͬd̮  (ʘ言ʘ╬)"
+
+# Targets that are not files
+.PHONY: all clean fclean re valgrind echo
