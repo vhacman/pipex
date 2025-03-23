@@ -64,15 +64,15 @@ make re
 
 ```
 pipex/
-├── libfy/             # Libreria Libft (libft)
+├── libft/             # Libreria Libft (libft)
 │   └── ...
 ├── src/               # File sorgente principali
 │   ├── pipex.c
-│   ├── utils.c
+│   ├── path_utils.c
 │   └── ...
 ├── includes/          # Header file (file .h)
 │   ├── pipex.h
-│   └── ...
+│   
 ├── Makefile
 └── README.md
 ```
