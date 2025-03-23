@@ -22,7 +22,7 @@
 # include "../libft/includes/libft.h"
 
 // exec_utils.c
-void	error(void);
+void	error(const char *msg);
 void	execute(char *cmd_input, char **envp);
 
 // path_utils.c

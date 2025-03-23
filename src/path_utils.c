@@ -6,15 +6,15 @@
 /*   By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 10:26:01 by gcollet           #+#    #+#             */
-/*   Updated: 2025/03/23 18:17:23 by vhacman          ###   ########.fr       */
+/*   Updated: 2025/03/23 18:49:48 by vhacman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
 /*
-** Extracts the list of directories from the PATH variable in envp.
-** Returns an array of directory strings (split by ':') or NULL if not found.
+** Retrieves the list of directory paths defined in the PATH variable from envp.
+** Returns a NULL-terminated array of strings, each representing a directory,
+** or NULL if the PATH variable is not found.
 */
 char	**get_path_dirs(char **envp)
 {
@@ -29,9 +29,10 @@ char	**get_path_dirs(char **envp)
 }
 
 /*
-** Searches for the given command (cmd) inside the array of directories.
-** Constructs full paths and returns the first one that is executable.
-** Returns NULL if not found.
+** Searches for an executable version of the command 'cmd' in the array 'dirs'.
+** For each directory, constructs a potential full path and checks if it is
+** accessible and executable using access().
+** Returns a newly allocated string with the valid path, or NULL if not found.
 */
 char	*find_cmd_in_dirs(char *cmd, char **dirs)
 {
@@ -56,10 +57,11 @@ char	*find_cmd_in_dirs(char *cmd, char **dirs)
 }
 
 /*
-** Resolves the full executable path of a command.
-** - If cmd contains '/', it is checked directly.
-** - Otherwise, it is searched for inside the PATH directories.
-** Returns a malloc'd string or NULL if not found.
+** Resolves the full executable path of a given command.
+** If the command contains '/', it is treated as an absolute or relative path.
+** Otherwise, it is searched in the directories from the PATH environment 
+	variable.
+** Returns a newly allocated string with the full path, or NULL if not found.
 */
 char	*get_cmd_path(char *cmd, char **envp)
 {
@@ -85,9 +87,12 @@ char	*get_cmd_path(char *cmd, char **envp)
 }
 
 /*
-** Splits the input string into a command and its arguments.
-** Then resolves the full path of the command and assigns it to *cmd_path.
-** Exits with status 127 if the command is invalid or not found.
+** Splits the input string (e.g. "ls -l") into an array of strings,
+** where the first element is the command and the rest are arguments.
+** It then resolves the full path of the command and assigns it to *cmd_path.
+** If the command is invalid or not found, prints an error and exits 
+	with status 127.
+** Returns the split command array.
 */
 char	**split_cmd_and_find(char *input, char **envp, char **cmd_path)
 {
@@ -120,6 +125,7 @@ char	**split_cmd_and_find(char *input, char **envp, char **cmd_path)
 
 /*
 ** Frees a NULL-terminated array of strings.
+** Used to deallocate memory from split commands or path arrays.
 */
 void	free_words(char **words)
 {

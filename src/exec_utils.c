@@ -17,10 +17,15 @@
 ** The error message is prefixed with "Error: " in red.
 ** Used throughout the project to handle critical failures (open, fork, pipe...).
 */
-void	error(void)
+/*
+** Displays a formatted error message using perror() and exits the program.
+** The error message is prefixed with "Error: " in red.
+** Used throughout the project to handle critical failures (open, fork, pipe...).
+*/
+void	error(const char *msg)
 {
-	ft_putstr_fd("\033[31mError: ", 2);
-	ft_putstr_fd("\033[0m", 2);
+	ft_putstr_fd("\033[31mError: \033[0m", 2);
+	perror(msg);
 	exit(EXIT_FAILURE);
 }
 
