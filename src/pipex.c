@@ -80,27 +80,27 @@ void	run_second_command(char **av, char **envp, int *fd)
 */
 void	pipex(char **av, char **envp)
 {
-	int		fd[2];
+	int		pipe_fd[2];
 	int		status;
 	int		exit_code;
 	pid_t	pid1;
 	pid_t	pid2;
 
 	exit_code = 0;
-	if (pipe(fd) == -1)
+	if (pipe(pipe_fd) == -1)
 		error("error in pipe");
 	pid1 = fork();
 	if (pid1 == -1)
 		error("fork error");
 	if (pid1 == 0)
-		run_first_command(av, envp, fd);
+		run_first_command(av, envp, pipe_fd);
 	pid2 = fork();
 	if (pid2 == -1)
 		error("fork error");
 	if (pid2 == 0)
-		run_second_command(av, envp, fd);
-	close(fd[0]);
-	close(fd[1]);
+		run_second_command(av, envp, pipe_fd);
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
 	while (wait(&status) > 0)
 		if (WIFEXITED(status))
 			exit_code = WEXITSTATUS(status);

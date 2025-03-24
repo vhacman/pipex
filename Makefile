@@ -6,7 +6,7 @@
 #    By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 10:15:55 by vhacman           #+#    #+#              #
-#    Updated: 2025/03/24 10:57:42 by vhacman          ###   ########.fr        #
+#    Updated: 2025/03/24 12:38:58 by vhacman          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,8 +67,8 @@ $(NAME): $(LIBFT_A) $(OBJS)
 # Rule to compile each .c file into a .o file in obj/
 # $< = source file, $@ = object file
 $(OBJ_DIR)/%.o: %.c
-	@mkdir -p $(dir $@)					# create directory if it doesn't exist
-	@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@	# compile .c into .o
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@	
 
 # Build libft.a by running libft's Makefile
 $(LIBFT_A):
@@ -76,19 +76,19 @@ $(LIBFT_A):
 
 # Remove object files, log, binary, and libft
 clean:
-	@make -s -C $(LIBFT_DIR) fclean
+	@make -s -C $(LIBFT_DIR) fclean --silent > /dev/null
 	@$(RM) -r $(OBJ_DIR)
 	@$(RM) valgrind.log $(NAME)
-	@echo "(╯°□°）╯︵ ┻━┻  Pipex obliterated. Objects, logs, binary, and libft.a wiped. ✨"
+	@echo "✨ ᴘɪᴘᴇx ᴏʙʟɪᴛᴇʀᴀᴛᴇᴅ ᴏʙᴊᴇᴄᴛꜱ ʟᴏɢꜱ ʙɪɴᴀʀʏ ᴀɴᴅ ʟɪʙꜰᴛᴀ ᴡɪᴘᴇᴅ. ✨"
 
 # Remove everything, including final binary
 fclean: clean
 	@$(RM) $(NAME)
-	@echo "(⌐■_■)🔥 Pipex & libft.a obliterated. fclean complete. 💣"
+	@echo "(⌐■_■)🔥 ᴘɪᴘᴇx ᴏʙʟɪᴛᴇʀᴀᴛᴇᴅ ꜰᴄʟᴇᴀɴ ᴄᴏᴍᴘʟᴇᴛᴇ. 💣"
 
 # Rebuild from scratch
 re: fclean all
-	@echo "(☞ﾟヮﾟ)☞ Recompiled from scratch. Pipex rises again!"
+	@echo "(☞ﾟヮﾟ)☞ ʀᴇᴄᴏᴍᴘɪʟᴇᴅ ꜰʀᴏᴍ ꜱᴄʀᴀᴛᴄʜ ᴘɪᴘᴇx ʀɪꜱᴇꜱ ᴀɢᴀɪɴ!"
 
 # **************************************************************************** #
 #                             EXTRA TARGETS                                    #
@@ -96,14 +96,14 @@ re: fclean all
 
 # Run the program under Valgrind for memory leak detection
 valgrind:
-	@echo "🧠 Initializing neural scan..."
-	@echo "🔍 Launching pipex under memory surveillance..."
+	@echo "🧠 ɪɴɪᴛɪᴀʟɪᴢɪɴɢ ɴᴇᴜʀᴀʟ ꜱᴄᴀɴ..."
+	@echo "🔍 ʟᴀᴜɴᴄʜɪɴɢ ᴘɪᴘᴇx ᴜɴᴅᴇʀ ᴍᴇᴍᴏʀʏ ꜱᴜʀᴠᴇɪʟʟᴀɴᴄᴇ..."
 	@valgrind --leak-check=full --track-fds=yes ./$(NAME) infile \"ls\" \"wc -l\" outfile > valgrind.log 2>&1
-	@echo "✅ Memory scan complete. No survivors... hopefully. ☠️"
+	@echo "✅ ᴍᴇᴍᴏʀʏ ꜱᴄᴀɴ ᴄᴏᴍᴘʟᴇᴛᴇ ɴᴏ ꜱᴜʀᴠɪᴠᴏʀꜱ ʜᴏᴘᴇꜰᴜʟʟʏ ☠️"
 
 # Fun success message
 echo:
-	@echo "(ﾟ◥益◤ﾟ) P̣̱̣͉̃̋̅ͦ̀ȉ̯͙͍̹̙͊p͍̭̰̎̃e̪̞̦̬̬̐̐x͚͙͕̠̋͌́ͦ ͓͗̃̅͊ͯC̬̥͎o̮̥̓ṁ̠̤̩ͤpͯ̆̽î̦̬͉ͅl̹ͅe͛ͬd̮  (ʘ言ʘ)"
+	@echo "(ﾟ◥益◤ﾟ)ᑭIᑭE᙭ ᑕOᗰᑭIᒪEᗪ (ʘ言ʘ)"
 
 # Declare targets that aren't actual files
 .PHONY: all clean fclean re valgrind echo

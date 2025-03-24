@@ -6,12 +6,17 @@
 /*   By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 10:26:01 by gcollet           #+#    #+#             */
-/*   Updated: 2025/03/24 11:21:05 by vhacman          ###   ########.fr       */
+/*   Updated: 2025/03/24 11:50:40 by vhacman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+/*The envp parameter in main() is an array of strings 
+(char **) that contains all the environment variables available to the process.
+Each element in the array is a string formatted as "KEY=VALUE", for example:
+
+PATH=/usr/bin:/bin:/usr/local/bin  */
 /**
  * get_path_dirs - Retrieves directories listed in the PATH variable.
  * @envp: The environment variables.
@@ -48,17 +53,17 @@ char	*find_cmd_in_dirs(char *cmd, char **dirs)
 {
 	int		i;
 	char	*tmp;
-	char	*full;
+	char	*full_path;
 
 	i = 0;
 	while (dirs[i])
 	{
 		tmp = ft_strjoin(dirs[i], "/");
-		full = ft_strjoin(tmp, cmd);
+		full_path = ft_strjoin(tmp, cmd);
 		free(tmp);
-		if (access(full, X_OK) == 0)
-			return (full);
-		free(full);
+		if (access(full_path, X_OK) == 0)
+			return (full_path);
+		free(full_path);
 		i++;
 	}
 	return (NULL);

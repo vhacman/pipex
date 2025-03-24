@@ -20,7 +20,7 @@ OBJS        = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 # **************************************************************************** #
 
 all: $(NAME)
-	@echo "\n(╯°□°）╯︵ ┻━┻  𝓛𝓲𝓫𝓯𝓽 compiled and summoned. Prepare for reuse. ⚔️)\n"
+	@echo "ʟɪʙꜰᴛ ᴄᴏᴍᴘɪʟᴇᴅ ᴀɴᴅ ꜱᴜᴍᴍᴏɴᴇᴅ ᴘʀᴇᴘᴀʀᴇ ꜰᴏʀ ʀᴇᴜꜱᴇ \n"
 
 $(NAME): $(OBJS)
 	@$(AR) $@ $^
@@ -31,14 +31,14 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 clean:
 	@$(RM) -rf $(OBJ_DIR)
-	@echo "🧽 Object files vanished. The forge is clean."
+	@echo "🧽  ᴏʙᴊᴇᴄᴛ ꜰɪʟᴇꜱ ᴠᴀɴɪꜱʜᴇᴅ. ᴛʜᴇ ꜰᴏʀɢᴇ ɪꜱ ᴄʟᴇᴀɴ."
 
 fclean: clean
 	@$(RM) $(NAME)
-	@echo "💀 $(NAME) sacrificed to the binary gods. fclean complete."
+	@echo "💀 $(NAME) ꜱᴀᴄʀɪꜰɪᴄᴇᴅ ᴛᴏ ᴛʜᴇ ʙɪɴᴀʀʏ ɢᴏᴅꜱ ꜰᴄʟᴇᴀɴ ᴄᴏᴍᴘʟᴇᴛᴇ."
 
 re: fclean all
-	@echo "🔁 Libft reborn. Recompiled from ashes."
+	@echo "🔁 ʟɪʙꜰᴛ ʀᴇʙᴏʀɴ ʀᴇᴄᴏᴍᴘɪʟᴇᴅ ꜰʀᴏᴍ ᴀꜱʜᴇꜱ."
 
 
 .PHONY: all clean fclean re
