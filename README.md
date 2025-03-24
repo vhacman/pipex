@@ -46,7 +46,7 @@ L’obiettivo è replicare questa logica utilizzando le chiamate di sistema in C
 Si comporta esattamente come:
 
 ```bash
-< input.txt grep hello | wc -l > output.txt
+< infile.txt grep hello | wc -l > outfile.txt
 ```
 
 ### ⚙️ Funzioni Consentite
