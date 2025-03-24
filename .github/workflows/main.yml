@@ -1,0 +1,35 @@
+name: Pipex
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  pipex:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y valgrind make clang
+
+      - name: Compile project
+        run: |
+          make
+
+      - name: Run basic test
+        run: |
+          echo "hello world" > infile
+          ./pipex infile "cat" "wc -w" outfile
+          cat outfile
+
+      - name: Check memory with valgrind
+        run: |
+          valgrind --leak-check=full --error-exitcode=1 \
+          ./pipex infile "cat" "wc -w" outfile
