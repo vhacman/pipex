@@ -24,17 +24,17 @@ void	run_first_command(char **av, char **envp, int *fd)
 {
 	int	infile;
 
-	infile = open(av[1], O_RDONLY);
-	if (infile == -1)
+	infile = open(av[1], O_RDONLY); //apre file in modalità sola lettura. input del comando1
+	if (infile == -1) //apertura fallisce: chiama error con il file per stampare errormsg
 		error(av[1]);
-	if (dup2(fd[1], STDOUT_FILENO) == -1)
-		error("dup2 (stdout)");
-	if (dup2(infile, STDIN_FILENO) == -1)
-		error("dup2 (infile)");
+	if (dup2(fd[1], STDOUT_FILENO) == -1) //duplica il lato scrittura della pipe sull STDOUT del processo.
+		error("dup2 (stdout)");				//tutto quello che cmd1 stampa va sulla pipe
+	if (dup2(infile, STDIN_FILENO) == -1) //redireziona lo standardInput del processo sul INFILE. ora 
+		error("dup2 (infile)");				//cmd1 riceve input da INFILE
 	close(fd[0]);
 	close(fd[1]);
 	close(infile);
-	execute(av[2], envp);
+	execute(av[2], envp); //esegue il comando, passando le variabili d'ambiente.
 }
 
 /*
@@ -49,12 +49,12 @@ void	run_second_command(char **av, char **envp, int *fd)
 {
 	int	outfile;
 
-	outfile = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	outfile = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644); //apre o crea il OUTFILE in modalità scrittura, e lo tronca se già esiste
 	if (outfile == -1)
 		error(av[4]);
-	if (dup2(fd[0], STDIN_FILENO) == -1)
+	if (dup2(fd[0], STDIN_FILENO) == -1) //collega la lettura della pipe allo standard INPUT. ora cmd2 riceve come input l'output di cmd1
 		error("dup2 (stdin)");
-	if (dup2(outfile, STDOUT_FILENO) == -1)
+	if (dup2(outfile, STDOUT_FILENO) == -1)//l'output del comando cmd2 ridiretto su OUTFILE
 		error("dup2 (outfile)");
 	close(fd[0]);
 	close(fd[1]);
@@ -71,7 +71,7 @@ void	run_second_command(char **av, char **envp, int *fd)
 */
 void	pipex(char **av, char **envp)
 {
-	int		fd[2];
+	int		fd[2]; //variabile dei file descriptor.
 	int		status;
 	int		exit_code;
 	pid_t	pid1;
@@ -79,15 +79,15 @@ void	pipex(char **av, char **envp)
 
 	exit_code = 0;
 	if (pipe(fd) == -1)
-		error("pipe");
+		error("error in pipe");
 	pid1 = fork();
 	if (pid1 == -1)
-		error("fork");
+		error("fork error");
 	if (pid1 == 0)
 		run_first_command(av, envp, fd);
 	pid2 = fork();
 	if (pid2 == -1)
-		error("fork");
+		error("fork error");
 	if (pid2 == 0)
 		run_second_command(av, envp, fd);
 	close(fd[0]);

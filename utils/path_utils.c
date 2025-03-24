@@ -6,7 +6,7 @@
 /*   By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 10:26:01 by gcollet           #+#    #+#             */
-/*   Updated: 2025/03/23 18:49:48 by vhacman          ###   ########.fr       */
+/*   Updated: 2025/03/24 09:21:43 by vhacman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	**split_cmd_and_find(char *input, char **envp, char **cmd_path)
 		ft_putstr_fd("Pipex: command not found: ", 2);
 		ft_putstr_fd(input, 2);
 		ft_putstr_fd("\n", 2);
-		free_words(parts);
+		free(parts);
 		exit(127);
 	}
 	*cmd_path = get_cmd_path(parts[0], envp);
@@ -123,16 +123,3 @@ char	**split_cmd_and_find(char *input, char **envp, char **cmd_path)
 	return (parts);
 }
 
-/*
-** Frees a NULL-terminated array of strings.
-** Used to deallocate memory from split commands or path arrays.
-*/
-void	free_words(char **words)
-{
-	int	i;
-
-	i = 0;
-	while (words && words[i])
-		free(words[i++]);
-	free(words);
-}

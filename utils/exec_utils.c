@@ -59,7 +59,7 @@ void	execute(char *av, char **envp)
 		else
 			perror("pipex");
 		free(path);
-		free_words(command);
+		free(command);
 		exit(code);
 	}
 }

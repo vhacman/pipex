@@ -30,7 +30,6 @@ char	**get_path_dirs(char **envp);
 char	*find_cmd_in_dirs(char *cmd, char **dirs);
 char	*get_cmd_path(char *cmd, char **envp);
 char	**split_cmd_and_find(char *input, char **envp, char **cmd_path);
-void	free_words(char **words);
 
 // pipex.c
 void	run_first_command(char **av, char **envp, int *fd);
