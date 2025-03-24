@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/24 10:23:18 by vhacman           #+#    #+#             */
+/*   Created: 2025/03/19 08:00:23 by vhacman           #+#    #+#             */
 /*   Updated: 2025/03/24 10:23:18 by vhacman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -13,12 +13,11 @@
 #include "pipex.h"
 
 /*
-** First child process setup:
-** - Opens infile (av[1]) in read-only mode.
-** - Redirects STDOUT to the pipe's write end.
-** - Redirects STDIN to the opened infile.
-** - Closes unused file descriptors.
-** - Executes av[2] using execve.
+** run_first_command:
+** Executes the first command of the pipeline.
+** Opens the input file (av[1]) in read-only mode.
+** Redirects STDIN to the input file and STDOUT to the write end of the pipe.
+** Closes unused file descriptors and launches the command via execve.
 */
 void	run_first_command(char **av, char **envp, int *fd)
 {
@@ -38,12 +37,11 @@ void	run_first_command(char **av, char **envp, int *fd)
 }
 
 /*
-** Second child process setup:
-** - Opens/creates outfile (av[4]) in write mode (truncating if exists).
-** - Redirects STDIN to the pipe's read end.
-** - Redirects STDOUT to the outfile.
-** - Closes unused file descriptors.
-** - Executes av[3] using execve.
+** run_second_command:
+** Executes the second command of the pipeline.
+** Opens the output file (av[4]) in write mode (truncated or created).
+** Redirects STDIN to the read end of the pipe and STDOUT to the output file.
+** Closes unused file descriptors and launches the command via execve.
 */
 void	run_second_command(char **av, char **envp, int *fd)
 {
@@ -72,13 +70,13 @@ void	run_second_command(char **av, char **envp, int *fd)
 }
 
 /*
-** Main process:
-** - Creates a pipe.
-** - Forks two child processes:
-**   • first runs the first command with infile and writes to pipe
-**   • second reads from pipe and writes to outfile
-** - Closes pipe file descriptors in the parent.
-** - Waits for children and exits with last command's exit status.
+** pipex:
+** Core function of the program.
+** Creates a pipe and forks two child processes:
+** - The first reads from the input file and writes to the pipe.
+** - The second reads from the pipe and writes to the output file.
+** The parent closes both ends of the pipe and waits for both children.
+** The program exits with the exit code of the last executed command.
 */
 void	pipex(char **av, char **envp)
 {

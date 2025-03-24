@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/23 16:50:39 by vhacman           #+#    #+#             */
-/*   Updated: 2025/03/23 16:50:39 by vhacman          ###   ########.fr       */
+/*   Created: 2025/03/24 08:00:23 by vhacman           #+#    #+#             */
+/*   Updated: 2025/03/24 10:23:18 by vhacman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ void	free_split(char **array);
 char	**get_path_dirs(char **envp);
 char	*find_cmd_in_dirs(char *cmd, char **dirs);
 char	*get_cmd_path(char *cmd, char **envp);
-char	**split_cmd_and_find(char *input, char **envp, char **cmd_path);
+char	**split_command(char *input);
+void	resolve_cmd_path_or_exit(char **parts, char **envp, char **cmd_path);
 
 //errors
 void	print_no_such_file(char *path);
 void	print_permission_denied(char *path);
 void	error(const char *msg);
+void	handle_exec_error(char *path, char **command);
 
 // pipex.c
 void	run_first_command(char **av, char **envp, int *fd);
