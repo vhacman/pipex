@@ -6,7 +6,7 @@
 #    By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 10:15:55 by vhacman           #+#    #+#              #
-#    Updated: 2025/03/24 12:50:12 by vhacman          ###   ########.fr        #
+#    Updated: 2025/03/24 13:28:42 by vhacman          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ clean:
 	@make -s -C $(LIBFT_DIR) fclean --silent > /dev/null
 	@$(RM) -r $(OBJ_DIR)
 	@$(RM) valgrind.log $(NAME)
+	@$(RM) outfile 
 	@echo "✨ ᴘɪᴘᴇx ᴏʙʟɪᴛᴇʀᴀᴛᴇᴅ ᴏʙᴊᴇᴄᴛꜱ ʟᴏɢꜱ ʙɪɴᴀʀʏ ᴀɴᴅ ʟɪʙꜰᴛᴀ ᴡɪᴘᴇᴅ. ✨"
 
 # Remove everything, including final binary
@@ -93,7 +94,7 @@ re: fclean all
 valgrind:
 	@echo "🧠 ɪɴɪᴛɪᴀʟɪᴢɪɴɢ ɴᴇᴜʀᴀʟ ꜱᴄᴀɴ..."
 	@echo "🔍 ʟᴀᴜɴᴄʜɪɴɢ ᴘɪᴘᴇx ᴜɴᴅᴇʀ ᴍᴇᴍᴏʀʏ ꜱᴜʀᴠᴇɪʟʟᴀɴᴄᴇ..."
-	@valgrind --leak-check=full --track-fds=yes ./$(NAME) infile \"ls\" \"wc -l\" outfile > valgrind.log 2>&1
+	@valgrind --leak-check=full --track-fds=yes ./$(NAME) infile 'ls -l' 'wc -l' outfile > valgrind.log 2>&1
 	@echo "✅ ᴍᴇᴍᴏʀʏ ꜱᴄᴀɴ ᴄᴏᴍᴘʟᴇᴛᴇ ɴᴏ ꜱᴜʀᴠɪᴠᴏʀꜱ ʜᴏᴘᴇꜰᴜʟʟʏ ☠️"
 
 # Fun success message

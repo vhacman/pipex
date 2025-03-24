@@ -6,7 +6,7 @@
 /*   By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 10:26:01 by gcollet           #+#    #+#             */
-/*   Updated: 2025/03/24 11:50:40 by vhacman          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:07:41 by vhacman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ char	**get_path_dirs(char **envp)
 char	*find_cmd_in_dirs(char *cmd, char **dirs)
 {
 	int		i;
-	char	*tmp;
+	char	*potential_path;
 	char	*full_path;
 
 	i = 0;
 	while (dirs[i])
 	{
-		tmp = ft_strjoin(dirs[i], "/");
-		full_path = ft_strjoin(tmp, cmd);
-		free(tmp);
+		potential_path = ft_strjoin(dirs[i], "/");
+		full_path = ft_strjoin(potential_path, cmd);
+		free(potential_path);
 		if (access(full_path, X_OK) == 0)
 			return (full_path);
 		free(full_path);

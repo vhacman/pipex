@@ -70,6 +70,35 @@ void	run_second_command(char **av, char **envp, int *fd)
 }
 
 /*
+** wait_for_children:
+** Waits for both child processes to finish.
+** Retrieves their exit statuses and ensures the parent exits with
+** the exit code of the last executed command, as per shell behavior.
+**
+*/
+void	wait_for_children(pid_t pid1, pid_t pid2)
+{
+	int	status1;
+	int	status2;
+	int	exit_code1;
+	int	exit_code2;
+
+	waitpid(pid1, &status1, 0);
+	if (WIFEXITED(status1))
+		exit_code1 = WEXITSTATUS(status1);
+	else
+		exit_code1 = 1;
+	waitpid(pid2, &status2, 0);
+	if (WIFEXITED(status2))
+		exit_code2 = WEXITSTATUS(status2);
+	else
+		exit_code2 = 1;
+	if (exit_code1 != 0)
+		exit(exit_code1);
+	exit(exit_code2);
+}
+
+/*
 ** pipex:
 ** Core function of the program.
 ** Creates a pipe and forks two child processes:
@@ -78,15 +107,13 @@ void	run_second_command(char **av, char **envp, int *fd)
 ** The parent closes both ends of the pipe and waits for both children.
 ** The program exits with the exit code of the last executed command.
 */
+// Funzione principale
 void	pipex(char **av, char **envp)
 {
 	int		pipe_fd[2];
-	int		status;
-	int		exit_code;
 	pid_t	pid1;
 	pid_t	pid2;
 
-	exit_code = 0;
 	if (pipe(pipe_fd) == -1)
 		error("error in pipe");
 	pid1 = fork();
@@ -101,8 +128,5 @@ void	pipex(char **av, char **envp)
 		run_second_command(av, envp, pipe_fd);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-	while (wait(&status) > 0)
-		if (WIFEXITED(status))
-			exit_code = WEXITSTATUS(status);
-	exit(exit_code);
+	wait_for_children(pid1, pid2);
 }

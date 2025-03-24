@@ -6,7 +6,7 @@
 /*   By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:55:54 by vhacman           #+#    #+#             */
-/*   Updated: 2025/03/24 11:27:25 by vhacman          ###   ########.fr       */
+/*   Updated: 2025/03/24 16:20:43 by vhacman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
  * Based on the errno value, prints an appropriate error message
  * (e.g. permission denied, file not found) and exits with the
  * corresponding exit code (127 for general errors, 126 for permission denied).
+ ENOENT = macro in errno.h --> file or directory doesn't exist
  */
 void	handle_exec_error(char *path, char **command)
 {

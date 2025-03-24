@@ -42,6 +42,7 @@ void	handle_exec_error(char *path, char **command);
 void	run_first_command(char **av, char **envp, int *fd);
 void	run_second_command(char **av, char **envp, int *fd);
 void	pipex(char **av, char **envp);
+void	wait_for_children(pid_t pid1, pid_t pid2);
 int		main(int ac, char **av, char **envp);
 
 #endif
