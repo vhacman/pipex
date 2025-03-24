@@ -5,56 +5,65 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/23 18:48:25 by vhacman           #+#    #+#             */
-/*   Updated: 2025/03/23 18:48:25 by vhacman          ###   ########.fr       */
+/*   Created: 2025/03/24 10:23:18 by vhacman           #+#    #+#             */
+/*   Updated: 2025/03/24 10:23:18 by vhacman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /*
-** Sets up the first child process:
-** - Opens the input file av[1] in read-only mode.
-** - Redirects STDOUT to the pipe's write-end.
+** First child process setup:
+** - Opens infile (av[1]) in read-only mode.
+** - Redirects STDOUT to the pipe's write end.
 ** - Redirects STDIN to the opened infile.
 ** - Closes unused file descriptors.
-** - Executes the command in av[2].
+** - Executes av[2] using execve.
 */
 void	run_first_command(char **av, char **envp, int *fd)
 {
 	int	infile;
 
-	infile = open(av[1], O_RDONLY); //apre file in modalità sola lettura. input del comando1
-	if (infile == -1) //apertura fallisce: chiama error con il file per stampare errormsg
+	infile = open(av[1], O_RDONLY);
+	if (infile == -1)
 		error(av[1]);
-	if (dup2(fd[1], STDOUT_FILENO) == -1) //duplica il lato scrittura della pipe sull STDOUT del processo.
-		error("dup2 (stdout)");				//tutto quello che cmd1 stampa va sulla pipe
-	if (dup2(infile, STDIN_FILENO) == -1) //redireziona lo standardInput del processo sul INFILE. ora 
-		error("dup2 (infile)");				//cmd1 riceve input da INFILE
+	if (dup2(fd[1], STDOUT_FILENO) == -1)
+		error("dup2 (stdout)");
+	if (dup2(infile, STDIN_FILENO) == -1)
+		error("dup2 (infile)");
 	close(fd[0]);
 	close(fd[1]);
 	close(infile);
-	execute(av[2], envp); //esegue il comando, passando le variabili d'ambiente.
+	execute(av[2], envp);
 }
 
 /*
-** Sets up the second child process:
-** - Opens or creates the output file av[4] with proper permissions.
-** - Redirects STDIN to the pipe's read-end.
-** - Redirects STDOUT to the opened outfile.
+** Second child process setup:
+** - Opens/creates outfile (av[4]) in write mode (truncating if exists).
+** - Redirects STDIN to the pipe's read end.
+** - Redirects STDOUT to the outfile.
 ** - Closes unused file descriptors.
-** - Executes the command in av[3].
+** - Executes av[3] using execve.
 */
 void	run_second_command(char **av, char **envp, int *fd)
 {
 	int	outfile;
 
-	outfile = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644); //apre o crea il OUTFILE in modalità scrittura, e lo tronca se già esiste
+	outfile = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile == -1)
+	{
+		if (errno == EACCES)
+		{
+			ft_putstr_fd("Permission denied: ", 2);
+			ft_putstr_fd(av[4], 2);
+			ft_putstr_fd("\n", 2);
+			exit(126);
+		}
 		error(av[4]);
-	if (dup2(fd[0], STDIN_FILENO) == -1) //collega la lettura della pipe allo standard INPUT. ora cmd2 riceve come input l'output di cmd1
+	}
+	if (dup2(fd[0], STDIN_FILENO) == -1)
 		error("dup2 (stdin)");
-	if (dup2(outfile, STDOUT_FILENO) == -1)//l'output del comando cmd2 ridiretto su OUTFILE
+	if (dup2(outfile, STDOUT_FILENO) == -1)
 		error("dup2 (outfile)");
 	close(fd[0]);
 	close(fd[1]);
@@ -63,15 +72,17 @@ void	run_second_command(char **av, char **envp, int *fd)
 }
 
 /*
-** Main pipex routine:
-** - Creates a pipe for inter-process communication.
-** - Forks the first and second children for cmd1 and cmd2.
-** - Closes pipe in parent.
-** - Waits for both children and returns the exit status of the last one.
+** Main process:
+** - Creates a pipe.
+** - Forks two child processes:
+**   • first runs the first command with infile and writes to pipe
+**   • second reads from pipe and writes to outfile
+** - Closes pipe file descriptors in the parent.
+** - Waits for children and exits with last command's exit status.
 */
 void	pipex(char **av, char **envp)
 {
-	int		fd[2]; //variabile dei file descriptor.
+	int		fd[2];
 	int		status;
 	int		exit_code;
 	pid_t	pid1;

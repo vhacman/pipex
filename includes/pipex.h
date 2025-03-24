@@ -22,14 +22,19 @@
 # include "../libft/includes/libft.h"
 
 // exec_utils.c
-void	error(const char *msg);
 void	execute(char *cmd_input, char **envp);
+void	free_split(char **array);
 
 // path_utils.c
 char	**get_path_dirs(char **envp);
 char	*find_cmd_in_dirs(char *cmd, char **dirs);
 char	*get_cmd_path(char *cmd, char **envp);
 char	**split_cmd_and_find(char *input, char **envp, char **cmd_path);
+
+//errors
+void	print_no_such_file(char *path);
+void	print_permission_denied(char *path);
+void	error(const char *msg);
 
 // pipex.c
 void	run_first_command(char **av, char **envp, int *fd);

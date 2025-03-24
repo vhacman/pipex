@@ -6,7 +6,7 @@
 #    By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 10:15:55 by vhacman           #+#    #+#              #
-#    Updated: 2025/03/24 10:15:56 by vhacman          ###   ########.fr        #
+#    Updated: 2025/03/24 10:57:42 by vhacman          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ LIBFT_A		= $(LIBFT_DIR)/libft.a
 SRCS = $(MAIN_DIR)/main.c \
 	   $(SRC_DIR)/pipex.c \
 	   $(UTILS_DIR)/exec_utils.c \
-	   $(UTILS_DIR)/path_utils.c
+	   $(UTILS_DIR)/path_utils.c \
+	   $(UTILS_DIR)/errors.c
 
 # List of object files corresponding to source files
 # Example: main/main.c → obj/main/main.o
