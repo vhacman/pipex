@@ -6,18 +6,15 @@
 #    By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 10:15:55 by vhacman           #+#    #+#              #
-#    Updated: 2025/03/24 12:40:50 by vhacman          ###   ########.fr        #
+#    Updated: 2025/03/24 12:50:12 by vhacman          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# **************************************************************************** #
-#                                VARIABLES                                     #
-# **************************************************************************** #
-
+# ======================== 🎯 TARGETS ====================== #
 NAME		= pipex			# The name of the final executable
-CC			= gcc			# The compiler to use
 
-# Compiler flags:
+# ====================== ⚙️ COMPILER FLAGS ================== #
+CC			= gcc			# The compiler to use
 # -Wall     : enable all warnings
 # -Wextra   : enable extra warnings
 # -Werror   : treat warnings as errors
@@ -30,7 +27,7 @@ RM			= rm -f
 # Silence output from recursive make calls
 MAKEFLAGS	+= -s
 
-# Directory paths
+# ===================== 📁 DIRECTORY PATHS =================== #
 SRC_DIR		= src
 OBJ_DIR		= obj
 INC_DIR		= includes
@@ -38,10 +35,11 @@ LIBFT_DIR	= libft
 MAIN_DIR	= main
 UTILS_DIR	= utils
 
+# =================== 📚 LIBRARIES ========================= #
 # Path to the compiled libft static library
 LIBFT_A		= $(LIBFT_DIR)/libft.a
 
-# List of source files (.c files with full paths)
+# ==================== 🧩 SOURCES ========================== #
 SRCS = $(MAIN_DIR)/main.c \
 	   $(SRC_DIR)/pipex.c \
 	   $(UTILS_DIR)/exec_utils.c \
@@ -52,10 +50,7 @@ SRCS = $(MAIN_DIR)/main.c \
 # Example: main/main.c → obj/main/main.o
 OBJS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRCS))
 
-# **************************************************************************** #
-#                                  RULES                                       #
-# **************************************************************************** #
-
+# ========================== 🛠️ RULES ====================== #
 # Default target: build the program
 all: $(NAME)
 
