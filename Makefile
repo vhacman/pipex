@@ -6,7 +6,7 @@
 #    By: vhacman <vhacman@student.42roma.it>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 10:15:55 by vhacman           #+#    #+#              #
-#    Updated: 2025/03/24 12:38:58 by vhacman          ###   ########.fr        #
+#    Updated: 2025/03/24 12:40:50 by vhacman          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,7 +103,7 @@ valgrind:
 
 # Fun success message
 echo:
-	@echo "(ﾟ◥益◤ﾟ)ᑭIᑭE᙭ ᑕOᗰᑭIᒪEᗪ (ʘ言ʘ)"
+	@echo "ᑭIᑭE᙭ ᑕOᗰᑭIᒪEᗪ"
 
 # Declare targets that aren't actual files
 .PHONY: all clean fclean re valgrind echo
