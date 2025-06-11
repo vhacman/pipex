@@ -1,3 +1,29 @@
+---
+
+## 🤝 Contribuisci in modo rispettoso
+
+Se trovi utile questo progetto, ti invito a non clonare direttamente la repository.
+
+### ✨ Perché fare una fork?
+
+Fare una **fork**:
+- ti permette di avere una copia personale su cui lavorare liberamente;
+- rende trasparente il tuo interesse per il progetto;
+- mi aiuta a costruire un GitHub più professionale e tracciabile, mostrando quante persone hanno interagito realmente con il mio lavoro.
+
+> 🚀 In questo modo posso far crescere il mio profilo e migliorare come sviluppatrice.
+
+### ✅ Come procedere
+
+1. Clicca in alto a destra su **Fork**
+2. Clona la tua copia con:
+
+```bash
+git clone https://github.com/<il-tuo-username>/<nome-repo>.git
+
+```
+---
+
 # 🚀 Pipex
 
 [![42 Project](https://img.shields.io/badge/42%20Project-Pipex-blue?style=for-the-badge&logo=42)](https://github.com/vhacman/pipex)  
