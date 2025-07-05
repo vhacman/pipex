@@ -1,29 +1,3 @@
----
-
-## 🤝 Contribuisci in modo rispettoso
-
-Se trovi utile questo progetto, ti invito a non clonare direttamente la repository.
-
-### ✨ Perché fare una fork?
-
-Fare una **fork**:
-- ti permette di avere una copia personale su cui lavorare liberamente;
-- rende trasparente il tuo interesse per il progetto;
-- mi aiuta a costruire un GitHub più professionale e tracciabile, mostrando quante persone hanno interagito realmente con il mio lavoro.
-
-> 🚀 In questo modo posso far crescere il mio profilo e migliorare come sviluppatrice.
-
-### ✅ Come procedere
-
-1. Clicca in alto a destra su **Fork**
-2. Clona la tua copia con:
-
-```bash
-git clone https://github.com/<il-tuo-username>/<nome-repo>.git
-
-```
----
-
 # 🚀 Pipex
 
 [![42 Project](https://img.shields.io/badge/42%20Project-Pipex-blue?style=for-the-badge&logo=42)](https://github.com/vhacman/pipex)  
@@ -121,3 +95,42 @@ PIPEX
 │  
 ├── README_EN.md      # Documentazione  
 └── Makefile          # Script di build  
+
+---
+
+## 🤝 Contribuisci in modo rispettoso
+
+Se trovi utile questo progetto, ti invito a non clonare direttamente la repository.
+
+### ✨ Perché fare una fork?
+
+Fare una **fork**:
+- ti permette di avere una copia personale su cui lavorare liberamente;
+- rende trasparente il tuo interesse per il progetto;
+- mi aiuta a costruire un GitHub più professionale e tracciabile, mostrando quante persone hanno interagito realmente con il mio lavoro.
+
+> 🚀 In questo modo posso far crescere il mio profilo e migliorare come sviluppatrice.
+
+### ✅ Come procedere
+
+1. Clicca in alto a destra su **Fork**
+2. Clona la tua copia con:
+
+```bash
+git clone https://github.com/<il-tuo-username>/<nome-repo>.git
+
+```
+---
+
+
+<h2> 👤 Author </h2>
+
+**vhacman**
+- 42 Intra Profile: [vhacman](https://profile.intra.42.fr/)
+
+<h2> Contatti 🧑‍💻 </h2>
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/viorica-gabriela-hacman-63a412267/)
+[![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/profile.php?id=100090802467237)
+[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/vgabrielah_/)
+
